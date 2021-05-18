@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  zoo:
+    build: zookeeper
+    ports:
+      - "127.0.0.13:2181:2181"
+    volumes:
+      - "$PWD/kafka_distr:/opt/kafka"
+    networks:
+      - kafka-lab
+
+  kafka-server:
+    build: kafka_server
+    ports:
+      - "127.0.0.14:9092:9092"
+    volumes:
+      - "$PWD/kafka_distr:/opt/kafka"
+    depends_on:
+      - zoo
+    networks:
+      - kafka-lab
+
+  kafka-sandbox:
+    build: kafka_sandbox
+    depends_on:
+      - kafka-server
+
+networks:
+  kafka-lab:
+    name: "kafka-lab"
