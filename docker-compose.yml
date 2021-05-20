@@ -65,6 +65,20 @@ services:
   kafka-sandbox:
     build: kafka_sandbox
 
+  phpfront1:
+    build: php
+    volumes:
+      - "$PWD/php/src:/var/www"
+    networks:
+      - kafka-lab
+
+  phpcli1:
+    build: php
+    volumes:
+      - "$PWD/php/src:/var/www"
+    networks:
+      - kafka-lab
+
 networks:
   kafka-lab:
     name: "kafka-lab"
