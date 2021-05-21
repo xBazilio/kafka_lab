@@ -7,4 +7,3 @@ if (extension_loaded('rdkafka')) {
 }
 
 echo PHP_EOL;
-echo 'Done' . PHP_EOL;

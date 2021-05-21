@@ -62,9 +62,6 @@ services:
       - kafka-lab
     command: ["bin/kafka-server-start.sh", "config/server.properties", "--override", "broker.id=3"]
 
-  kafka-sandbox:
-    build: kafka_sandbox
-
   phpfront1:
     build: php
     volumes:
