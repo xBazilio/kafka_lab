@@ -1,29 +1,80 @@
 version: "3.9"
 services:
-  zoo:
+  zoo1:
     build: zookeeper
     ports:
-      - "127.0.0.13:2181:2181"
+      - "127.0.0.11:2180:2180"
     volumes:
       - "$PWD/kafka_distr:/opt/kafka"
+      - "$PWD/zookeeper/data/zoo1:/opt/zookeeper"
     networks:
       - kafka-lab
-
-  kafka-server:
-    build: kafka_server
+  zoo2:
+    build: zookeeper
     ports:
-      - "127.0.0.14:9092:9092"
+      - "127.0.0.12:2180:2180"
     volumes:
       - "$PWD/kafka_distr:/opt/kafka"
-    depends_on:
-      - zoo
+      - "$PWD/zookeeper/data/zoo2:/opt/zookeeper"
+    networks:
+      - kafka-lab
+  zoo3:
+    build: zookeeper
+    ports:
+      - "127.0.0.13:2180:2180"
+    volumes:
+      - "$PWD/kafka_distr:/opt/kafka"
+      - "$PWD/zookeeper/data/zoo3:/opt/zookeeper"
     networks:
       - kafka-lab
 
-  kafka-sandbox:
-    build: kafka_sandbox
+  kafka1:
+    build: kafka_server
+    volumes:
+      - "$PWD/kafka_distr:/opt/kafka"
     depends_on:
-      - kafka-server
+      - zoo1
+      - zoo2
+      - zoo3
+    networks:
+      - kafka-lab
+    command: ["bin/kafka-server-start.sh", "config/server.properties", "--override", "broker.id=1"]
+  kafka2:
+    build: kafka_server
+    volumes:
+      - "$PWD/kafka_distr:/opt/kafka"
+    depends_on:
+      - zoo1
+      - zoo2
+      - zoo3
+    networks:
+      - kafka-lab
+    command: ["bin/kafka-server-start.sh", "config/server.properties", "--override", "broker.id=2"]
+  kafka3:
+    build: kafka_server
+    volumes:
+      - "$PWD/kafka_distr:/opt/kafka"
+    depends_on:
+      - zoo1
+      - zoo2
+      - zoo3
+    networks:
+      - kafka-lab
+    command: ["bin/kafka-server-start.sh", "config/server.properties", "--override", "broker.id=3"]
+
+  phpfront1:
+    build: php
+    volumes:
+      - "$PWD/php/src:/var/www"
+    networks:
+      - kafka-lab
+
+  phpcli1:
+    build: php
+    volumes:
+      - "$PWD/php/src:/var/www"
+    networks:
+      - kafka-lab
 
 networks:
   kafka-lab:
