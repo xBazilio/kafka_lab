@@ -6,7 +6,7 @@ The project is intended to help in trying kafka. It's not so easy to install all
 
 The project is centered around PHP. It has docker-compose file with all the containers defined. Two of them are PHP containers to imitate producer and consumer environment.
 
-I did my best to include helpfull examples to most common use cases **WIP**
+I did my best to include helpfull examples for most common use cases **WIP**
 
 ### Installation
 
