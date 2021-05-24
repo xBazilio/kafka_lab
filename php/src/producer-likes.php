@@ -49,5 +49,5 @@ $result = $producer->procuce('likes', $message, $postId);
 if ($result) {
     echo "Post #{$postId} was " . ($like ? 'liked 👍' : 'disliked 👎') . PHP_EOL;
 } else {
-    echo "💩 couldn't produse message for Post #{$postId}" . PHP_EOL;
+    echo "💩 couldn't produce message for Post #{$postId}" . PHP_EOL;
 }

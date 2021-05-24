@@ -13,7 +13,7 @@ $consumer->subscribe(['likes']);
 
 try {
     while (true) {
-        $message = $consumer->consume(120 * 1000);
+        $message = $consumer->consume(10 * 1000);
         switch ($message->err) {
             case RD_KAFKA_RESP_ERR_NO_ERROR:
                 $data = json_decode($message->payload, true);
