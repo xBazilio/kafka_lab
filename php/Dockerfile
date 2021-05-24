@@ -10,7 +10,7 @@ WORKDIR "/opt/librdkafka-src/librdkafka-1.7.0"
 RUN ./configure --install-deps && make && make install
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
-RUN install-php-extensions xdebug mysqli rdkafka
+RUN install-php-extensions xdebug mysqli pcntl rdkafka
 USER 1000:1000
 VOLUME ["/var/www"]
 WORKDIR "/var/www"
