@@ -61,7 +61,7 @@ for ($i = 0; $i < $consumerCount; $i++) {
 
         $conf = new RdKafka\Conf();
         $conf->set('metadata.broker.list', 'kafka1:9092,kafka2:9092,kafka3:9092');
-        $conf->set('group.id', 'likes-consumer');
+        $conf->set('group.id', 'messages-consumer');
         $conf->set('auto.offset.reset', 'earliest');
         $conf->set('session.timeout.ms', 60000);
         $conf->set('group.instance.id', $groupInstanceId);
