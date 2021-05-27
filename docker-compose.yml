@@ -32,34 +32,43 @@ services:
     build: kafka_server
     volumes:
       - "$PWD/kafka_distr:/opt/kafka"
+      - "$PWD/kafka_server/logs1:/logs/kafka"
     depends_on:
       - zoo1
       - zoo2
       - zoo3
     networks:
       - kafka-lab
+    environment:
+      JMX_PORT: 9093
     command: ["bin/kafka-server-start.sh", "config/server.properties", "--override", "broker.id=1"]
   kafka2:
     build: kafka_server
     volumes:
       - "$PWD/kafka_distr:/opt/kafka"
+      - "$PWD/kafka_server/logs2:/logs/kafka"
     depends_on:
       - zoo1
       - zoo2
       - zoo3
     networks:
       - kafka-lab
+    environment:
+      JMX_PORT: 9093
     command: ["bin/kafka-server-start.sh", "config/server.properties", "--override", "broker.id=2"]
   kafka3:
     build: kafka_server
     volumes:
       - "$PWD/kafka_distr:/opt/kafka"
+      - "$PWD/kafka_server/logs3:/logs/kafka"
     depends_on:
       - zoo1
       - zoo2
       - zoo3
     networks:
       - kafka-lab
+    environment:
+      JMX_PORT: 9093
     command: ["bin/kafka-server-start.sh", "config/server.properties", "--override", "broker.id=3"]
 
   phpfront1:

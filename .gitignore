@@ -1,3 +1,4 @@
 kafka_distr/*
 .idea
 zookeeper/data/*
+kafka_server/logs*

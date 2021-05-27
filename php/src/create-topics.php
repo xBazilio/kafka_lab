@@ -24,7 +24,7 @@ foreach ($topicsConfig as $name => $params) {
     foreach ($params as $k => $v) {
         $params[$k] = escapeshellarg($v);
     }
-    echo "./bin/kafka-topics.sh --create --if-not-exists --topic {$name} "
+    echo "export JMX_PORT=9094 && ./bin/kafka-topics.sh --create --if-not-exists --topic {$name} "
         . "--replication-factor {$params['replication-factor']} --partitions {$params['partitions']} "
         . "--bootstrap-server localhost:9092";
 
