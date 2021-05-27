@@ -12,6 +12,7 @@ I did my best to include helpfull examples for most common use cases
 
 1. Download and unpack [kafka](https://kafka.apache.org/downloads) into `kafka_distr` folder
 1. Copy and overwrite *.properties files from `kafka_custom_config` to `kafka_distr/config`
+1. Copy and overwrite `kafka-server-start.sh` fo `kafka_distr/bin`
 1. Run `docker-compose up`
 
 ### Usage
