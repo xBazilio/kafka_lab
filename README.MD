@@ -23,6 +23,12 @@ To run PHP contaners go into `php` directory and run `php_cli.sh` or `php_front.
 
 PHP containers have working dir linked to project's `php/src` dir, so you can run various examples from here.
 
+#### Creating topics
+
+It's not possible to create topics from PHP. By running `php create-topics.php` you can see commands you need to run to create topics.
+
+Login to kafka server with `docker container exec -it kafka_lab_kafka1_1 /bin/bash` and run those two commands.
+
 #### Simple produce/consume
 
 The pair `producer-likes.php` and `consumer-likes.php` shows an example of simple produce/consume pattern.
