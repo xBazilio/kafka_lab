@@ -7,9 +7,13 @@ services:
     volumes:
       - "$PWD/kafka_distr:/opt/kafka"
       - "$PWD/zookeeper/data/zoo1:/opt/zookeeper"
+      - "$PWD/prometheus:/opt/prometheus"
     hostname: zoo1
     networks:
       - kafka-lab
+    environment:
+      JMX_PORT: 9093
+      EXTRA_ARGS: "-javaagent:/opt/prometheus/jmx_prometheus_javaagent-0.15.0.jar=16100:/opt/prometheus/zookeeper.yml"
   zoo2:
     build: zookeeper
     ports:
@@ -17,9 +21,13 @@ services:
     volumes:
       - "$PWD/kafka_distr:/opt/kafka"
       - "$PWD/zookeeper/data/zoo2:/opt/zookeeper"
+      - "$PWD/prometheus:/opt/prometheus"
     hostname: zoo2
     networks:
       - kafka-lab
+    environment:
+      JMX_PORT: 9093
+      EXTRA_ARGS: "-javaagent:/opt/prometheus/jmx_prometheus_javaagent-0.15.0.jar=16100:/opt/prometheus/zookeeper.yml"
   zoo3:
     build: zookeeper
     ports:
@@ -27,15 +35,22 @@ services:
     volumes:
       - "$PWD/kafka_distr:/opt/kafka"
       - "$PWD/zookeeper/data/zoo3:/opt/zookeeper"
+      - "$PWD/prometheus:/opt/prometheus"
     hostname: zoo3
     networks:
       - kafka-lab
+    environment:
+      JMX_PORT: 9093
+      EXTRA_ARGS: "-javaagent:/opt/prometheus/jmx_prometheus_javaagent-0.15.0.jar=16100:/opt/prometheus/zookeeper.yml"
 
   kafka1:
     build: kafka_server
+    ports:
+      - "127.0.0.21:16100:16100"
     volumes:
       - "$PWD/kafka_distr:/opt/kafka"
       - "$PWD/kafka_server/logs1:/logs/kafka"
+      - "$PWD/prometheus:/opt/prometheus"
     depends_on:
       - zoo1
       - zoo2
@@ -45,12 +60,16 @@ services:
       - kafka-lab
     environment:
       JMX_PORT: 9093
+      EXTRA_ARGS: "-javaagent:/opt/prometheus/jmx_prometheus_javaagent-0.15.0.jar=16100:/opt/prometheus/kafka_broker.yml"
     command: ["bin/kafka-server-start.sh", "config/server.properties", "--override", "broker.id=1"]
   kafka2:
     build: kafka_server
+    ports:
+      - "127.0.0.22:16100:16100"
     volumes:
       - "$PWD/kafka_distr:/opt/kafka"
       - "$PWD/kafka_server/logs2:/logs/kafka"
+      - "$PWD/prometheus:/opt/prometheus"
     depends_on:
       - zoo1
       - zoo2
@@ -60,12 +79,16 @@ services:
       - kafka-lab
     environment:
       JMX_PORT: 9093
+      EXTRA_ARGS: "-javaagent:/opt/prometheus/jmx_prometheus_javaagent-0.15.0.jar=16100:/opt/prometheus/kafka_broker.yml"
     command: ["bin/kafka-server-start.sh", "config/server.properties", "--override", "broker.id=2"]
   kafka3:
     build: kafka_server
+    ports:
+      - "127.0.0.23:16100:16100"
     volumes:
       - "$PWD/kafka_distr:/opt/kafka"
       - "$PWD/kafka_server/logs3:/logs/kafka"
+      - "$PWD/prometheus:/opt/prometheus"
     depends_on:
       - zoo1
       - zoo2
@@ -75,6 +98,7 @@ services:
       - kafka-lab
     environment:
       JMX_PORT: 9093
+      EXTRA_ARGS: "-javaagent:/opt/prometheus/jmx_prometheus_javaagent-0.15.0.jar=16100:/opt/prometheus/kafka_broker.yml"
     command: ["bin/kafka-server-start.sh", "config/server.properties", "--override", "broker.id=3"]
 
   phpfront1:
